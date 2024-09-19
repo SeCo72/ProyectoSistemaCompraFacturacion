@@ -19,9 +19,11 @@
   <!-- Custom styles for this template-->
   <link href="{% static 'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+  <link href="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+
 </head>
 
-<body id="page-top">
+<body id="page-top" class='bg-gradient-primary'>
 
     {% block side_bar %}
   <!-- Page Wrapper -->
@@ -31,7 +33,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'bases:home' %}">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -43,7 +45,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{% url 'bases:home' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -53,19 +55,19 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        Opciones de menu
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>Catalogos</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
+            <h6 class="collapse-header">Catalogos de Inventario</h6>
+            <a class="collapse-item" href="{% url 'inv:categoria_list' %}">Categorias</a>
             <a class="collapse-item" href="cards.html">Cards</a>
           </div>
         </div>
@@ -149,7 +151,7 @@
       <div id="content">
 
         <!-- Topbar -->
-         {% block top_bar %}
+        {% block top_bar %}
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
@@ -334,7 +336,7 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-         {% block page_content %}
+        {% block page_content %}
         <div class="container-fluid">
 
           <!-- Page Heading -->
@@ -343,7 +345,7 @@
         </div>
         {% endblock %}
         <!-- /.container-fluid -->
-         {% block footer %}
+        {% block footer %}
 
       </div>
       <!-- End of Main Content -->
@@ -364,7 +366,7 @@
   </div>
   {% endblock %}
   <!-- End of Page Wrapper -->
-   {% block login %}{% endblock %}
+  {% block login %}{% endblock %}
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -383,8 +385,11 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
+          <form method="post" action="{% url 'bases:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Salir</button>
+        </form>
+        </div>  
       </div>
     </div>
   </div>
@@ -398,6 +403,10 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{% static 'base/js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'base/vendor/datatables/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'basevendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
 
   {% block js_page %} {% endblock %}
 
