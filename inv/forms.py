@@ -18,4 +18,4 @@ class CategoriaForm(forms.ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
-            })
+            }) 
