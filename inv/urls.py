@@ -29,10 +29,10 @@ urlpatterns = [
     path('UnidadesMedidas/edit/<int:pk>',UMEdit.as_view(), name='um_edit'),
     path('UnidadesMedidas/inactivar/<int:id>',um_inactivar, name='um_inactivar'),
 #producto url
-    path('productos/', ProductoView.as_view(), name='producto_list'), 
-    path('productos/new', ProductoNew.as_view(), name='producto_new'),
-    path('productos/edit/<int:pk>',ProductoEdit.as_view(), name='producto_edit'),
-    path('productos/inactivar/<int:id>',producto_inactivar, name='producto_inactivar'),
+    path('Productos/', ProductoView.as_view(), name='producto_list'), 
+    path('Productos/new', ProductoNew.as_view(), name='producto_new'),
+    path('Productos/edit/<int:pk>',ProductoEdit.as_view(), name='producto_edit'),
+    path('Productos/inactivar/<int:id>',producto_inactivar, name='producto_inactivar'),
 
 
 
