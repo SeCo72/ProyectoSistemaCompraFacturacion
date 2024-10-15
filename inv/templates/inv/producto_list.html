@@ -11,7 +11,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                 <div class="dropdown-header">Acciones:</div>
-                <a class="dropdown-item" href="{% url 'inv:producto_new' %}"><i class="far fa-calendar-plus"></i> Nuevo</a>
+                <a class="dropdown-item" onclick="return abrir_modal('{% url 'inv:producto_new' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
             </div>
         </div>
     </div>
@@ -19,43 +19,74 @@
     <div class="card-body">
         {% if not obj %}
             <div class="alert alert-info">No hay productos</div>
-        {% else %}
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Descripción</th>
+        {% endif %}
+        <table class="table table-striped table-hover dt-reponsive nowrap" style="width:100%">
+                 <thead>
+                        <th>Sub.Cat.</th>
+                        <th>Código</th>
+                        <th>Barra</th>
+                        <th>Descripcion</th>
+                        <th>existencia</th>
+                        <th>Marca</th>
+                        <th>U.M.</th>
                         <th>Estado</th>
-                        <th>F. Creado</th>
-                        <th>F. Modificado</th>
                         <th class="all">Acciones</th>
-                    </tr>
-                </thead>
+                    </thead>
                 <tbody>
                     {% for item in obj %}
                     <tr>
-                        <td>{{ item.id }}</td>
+                        <td>{{ item.subcategoria }}</td>
+                        <td>{{ item.codigo }}</td>
+                        <td>{{ item.codigo_barra }}</td>
                         <td>{{ item.descripcion }}</td>
+                        <td>{{ item.existencia }}</td>
+                        <td>{{ item.marca }}</td>
+                        <td>{{ item.unidad_medida }}</td>
                         <td>{{ item.estado|yesno:"Activo,Inactivo" }}</td>
-                        <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
-                        <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
                         <td>
-                            <a href="{% url 'inv:categoria_edit' item.id %}" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a>
-                            <a href="{% url 'inv:categoria_del' item.id%}" class="btn btn-danger btn-circle" role="button"><i class="far fa-trash-alt"></i></a>
+                           <button class="btn btn-warning btn-circle" onclick = "return abrir_modal('{% url 'inv:producto_edit' item.id %}')">
+                            <i class="far fa-edit"></i></button>
+                            <a href="{% url 'inv:producto_inactivar' item.id%}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
-
 {% block js_page %}
 <script>
-$(document).ready(function(){
-    $('.table').DataTable();
+    //call the dataTables jQuery plugin
+    $(document).ready(function(){
+    $('.table').DataTable({
+        "language":{
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningun dato disponible en esta Tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":"mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":"(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":"",
+            "sSearch": "Buscar",
+            "sUrl":"",
+            "sInfoThousands":".",
+            "sLoadingRecords":"Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class ='fa fa-angle-double-left'></span",
+                "sLast": "<span class ='fa fa-angle-double-right'></span",
+                "sNext": "<span class ='fa fa-angle-right'></span",
+                "sPrevious": "<span class ='fa fa-angle-left'></span",    
+            },
+            "oAria":{
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente",
+            }
+            
+            
+        } 
+    });
 });
 </script>     
 {% endblock %}
