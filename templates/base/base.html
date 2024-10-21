@@ -23,7 +23,7 @@
   <link href="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
   <!--jQuery confirm-->
-  <link href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css'%}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css'%}">
  
 </head>
 
@@ -416,11 +416,10 @@
 
     <!-- Page level plugins -->
     <script src="{% static 'base/vendor/datatables/jquery.dataTables.min.js'%}"></script>
-    <script src="{% static 'basevendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
     <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
-  {% block js_page %} {% endblock %}
   {% block control_modal %}
   <script>
      function abrir_modal(url) {
@@ -437,13 +436,25 @@
     });
     return false;
 }
-  
-      function cerrar_modal() {
+        function cerrar_modal() {
           $('#popup').modal('hide');
           return false;
       }
+
+      function mensaje(msg, color='green'){
+        $.alert({
+          title:'',
+          theme:'modern',
+          type:color,
+          content:msg
+        });        
+      }
+
   </script>
   {% endblock %}
+
+  {% block js_page %} {% endblock %}
+
 </body>
 
 </html>
