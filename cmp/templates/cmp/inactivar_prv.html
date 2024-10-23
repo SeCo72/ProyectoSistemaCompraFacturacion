@@ -45,7 +45,7 @@
 
             var id = {{ obj.id }};  // Asegúrate de que obj.id esté disponible en el contexto
             var template = "{% url 'cmp:proveedor_inactivar' obj.id %}";  // Ajustado aquí si no hay namespace
-            //template += id;
+           //template += id;
             var data = {"id": id};
             data = JSON.stringify(data);
 
@@ -59,10 +59,13 @@
                 success: function(response){
                     console.log(response);
                     cerrar_modal();
-                    alert(response);
+                    //alert(response);
+                    var tipo=(response.startsWith('Proveedor no existe') ? 'red':'green');
+                    mensaje(response, tipo);
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     console.log(textStatus, errorThrown);
+                    mensaje(errorThrown, 'red');
                     cerrar_modal();
                 }
             });

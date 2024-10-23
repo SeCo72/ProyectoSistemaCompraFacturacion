@@ -442,6 +442,14 @@
       }
 
       function mensaje(msg, color='green'){
+        if (color == "success"){
+          color = "green";
+        }
+
+        if (color == "error"){
+          color = "red";
+        }
+
         $.alert({
           title:'',
           theme:'modern',
@@ -449,6 +457,12 @@
           content:msg
         });        
       }
+
+      {% if messages %}
+        {% for message in messages %}
+          mensaje("{{ message  }}");
+        {% endfor %}
+      {% endif %}
 
   </script>
   {% endblock %}
