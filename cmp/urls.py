@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import ProveedorView, ProveedorNew, ProveedorEdit, ProveedorInactivar, ComprasView
+from .views import ProveedorView, ProveedorNew, ProveedorEdit, ProveedorInactivar, ComprasView, compras, CompraDetDelete
 
 app_name = 'cmp'
 
@@ -10,6 +10,9 @@ urlpatterns = [
     path('Proveedor/inactivar/<int:id>', ProveedorInactivar, name='proveedor_inactivar'), 
 
     path('compras/',ComprasView.as_view(), name="compras_list"),
+    path('compras/new',compras, name="compras_new"),
+    path('compras/edit/<int:compra_id>',compras, name="compras_edit"),
+    path('compras/<int:compra_id>/delete/<int:pk>',CompraDetDelete.as_view(), name="compras_del"),
 ]
 
 
