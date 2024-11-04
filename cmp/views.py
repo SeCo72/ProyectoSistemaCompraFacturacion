@@ -181,5 +181,5 @@ class CompraDetDelete(SinPrivilegios, generic.DeleteView):
     context_object_name = 'obj'
     
     def get_success_url(self):
-          compra_id=self.kwargs['compra_id']
-          return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
+            compra_id=self.kwargs['compra_id']
+            return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})

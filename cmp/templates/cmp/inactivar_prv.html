@@ -43,8 +43,8 @@
         $("#btnInactivar").click(function(e){ 
             e.preventDefault();
 
-            var id = {{ obj.id }};  // Asegúrate de que obj.id esté disponible en el contexto
-            var template = "{% url 'cmp:proveedor_inactivar' obj.id %}";  // Ajustado aquí si no hay namespace
+            var id = {{ obj.id }}; 
+            var template = "{% url 'cmp:proveedor_inactivar' obj.id %}";
            //template += id;
             var data = {"id": id};
             data = JSON.stringify(data);
@@ -70,5 +70,5 @@
                 }
             });
         });
-     });    
+    });    
 </script>

@@ -19,15 +19,17 @@
   <!-- Custom styles for this template-->
   <link href="{% static 'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
-   <!-- Custom styles for this page-->
+<!-- Custom styles for this page-->
   <link href="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
   <!--jQuery confirm-->
   <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css'%}">
- 
+
   <!-- XDSoft DateTimePicker -->  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.css"> 
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top" class='bg-gradient-primary'>
@@ -94,8 +96,13 @@
 
             {% if perms.cmp.view_proveedor %}
             <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
-            {% endif %}
             
+              {% endif %}
+              <h6 class="collapse-header">Catálogos de Facturación:</h6>
+              {% if perms.fac.view_cliente %}
+                  <a class="collapse-item" href="{% url 'fac:cliente_list' %}">Cliente</a>
+              {% endif %}
+
           </div>
         </div>
       </li>
@@ -109,6 +116,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Entradas</h6>
             <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Compras</a>
+
+            <h6 class="collapse-header">Salidas</h6>
+            <a class="collapse-item" href="{% url 'fac:factura_list' %}">facturas</a>
 
           </div>
         </div>
@@ -447,6 +457,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table-locale-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>  
       $(document).ready(function () {  
             jQuery.datetimepicker.setLocale('es');  
@@ -455,7 +468,7 @@
 
   {% block control_modal %}
   <script>
-     function abrir_modal(url) {
+    function abrir_modal(url) {
     $("#popup").load(url, function(response, status, xhr) {
         if (status === "error") {
             alert("Error al cargar el contenido: " + xhr.status + " " + xhr.statusText);

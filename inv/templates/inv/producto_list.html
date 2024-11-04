@@ -21,7 +21,7 @@
             <div class="alert alert-info">No hay productos</div>
         {% endif %}
         <table class="table table-striped table-hover dt-reponsive nowrap" style="width:100%">
-                 <thead>
+                <thead>
                         <th>Sub.Cat.</th>
                         <th>Código</th>
                         <th>Barra</th>
@@ -44,7 +44,7 @@
                         <td>{{ item.unidad_medida }}</td>
                         <td>{{ item.estado|yesno:"Activo,Inactivo" }}</td>
                         <td>
-                           <button class="btn btn-warning btn-circle" onclick = "return abrir_modal('{% url 'inv:producto_edit' item.id %}')">
+                        <button class="btn btn-warning btn-circle" onclick = "return abrir_modal('{% url 'inv:producto_edit' item.id %}')">
                             <i class="far fa-edit"></i></button>
                             <a href="{% url 'inv:producto_inactivar' item.id%}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
                         </td>
