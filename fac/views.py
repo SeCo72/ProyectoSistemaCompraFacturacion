@@ -18,9 +18,9 @@ from inv.models import Producto
 
 class ClienteView(SinPrivilegios, generic.ListView):
     model = Cliente
-    template_name = "fac/cliente.html"  # Corrección: elimina el espacio extra
+    template_name = "fac/cliente_list.html"
     context_object_name = "obj"
-    login_url = 'bases:login'
+    permission_required="cmp.view_cliente"
 
 
 class VistaBaseCreate(SuccessMessageMixin, SinPrivilegios, generic.CreateView): 

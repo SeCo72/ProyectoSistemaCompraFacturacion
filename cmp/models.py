@@ -11,33 +11,32 @@ from inv.models import Producto
 
 
 class Proveedor(ClaseModelo):
-    descripcion = models.CharField(
+    descripcion=models.CharField(
         max_length=100,
         unique=True
-    )
-    direccion = models.CharField(
+        )
+    direccion=models.CharField(
         max_length=250,
         null=True, blank=True
-    )
-    contacto = models.CharField(
+        )
+    contacto=models.CharField(
         max_length=100
     )
-    telefono = models.CharField(
+    telefono=models.CharField(
         max_length=10,
         null=True, blank=True
     )
-    email = models.EmailField(
-        max_length=254,
-        null=True,
-        blank=True
+    email=models.CharField(
+        max_length=250,
+        null=True, blank=True
     )
 
     def __str__(self):
-        return self.descripcion
+        return '{}'.format(self.descripcion)
 
-    def save(self, *args, **kwargs):
+    def save(self):
         self.descripcion = self.descripcion.upper()
-        super(Proveedor, self).save(*args, **kwargs)
+        super(Proveedor, self).save()
 
     class Meta:
         verbose_name_plural = "Proveedores"

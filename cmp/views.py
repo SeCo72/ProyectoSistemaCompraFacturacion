@@ -1,70 +1,83 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
 from django.views import generic
 from django.urls import reverse_lazy
 import datetime
-
-from django.views import View  
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
-from django.db.models import Sum
+from django.http import HttpResponse, JsonResponse
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse
 import json
+from django.db.models import Sum
 
 from .models import Proveedor, ComprasEnc, ComprasDet
-from cmp.forms import ProveedorForm, ComprasEncForm
+from cmp.forms import ProveedorForm,ComprasEncForm
 from bases.views import SinPrivilegios
-
 from inv.models import Producto
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ProveedorView(LoginRequiredMixin, generic.ListView):
+class ProveedorView(SinPrivilegios, generic.ListView):
     model = Proveedor
     template_name = "cmp/proveedor_list.html"
     context_object_name = "obj"
-    login_url = 'bases:login'
+    permission_required="cmp.view_proveedor"
 
-class ProveedorNew(LoginRequiredMixin, generic.CreateView):
-    model = Proveedor
-    template_name = "cmp/proveedor_form.html"
-    context_object_name = "obj"
-    form_class = ProveedorForm
-    success_url = reverse_lazy("cmp:proveedor_list")
-    login_url = "bases:login"
+class ProveedorNew(SuccessMessageMixin, generic.CreateView):
+    model=Proveedor
+    template_name="cmp/proveedor_form.html"
+    context_object_name = 'obj'
+    form_class=ProveedorForm
+    success_url= reverse_lazy("cmp:proveedor_list")
+    permission_required = "cmp.add_proveedor"
 
-class ProveedorEdit(LoginRequiredMixin, generic.UpdateView):
-    model = Proveedor
-    template_name = "cmp/proveedor_form.html"
-    context_object_name = "obj"
-    form_class = ProveedorForm
-    success_url = reverse_lazy("cmp:proveedor_list") 
-    login_url = "bases:login"
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        #print(self.request.user.id)
+        return super().form_valid(form)
+
+
+class ProveedorEdit(SuccessMessageMixin, SinPrivilegios,\
+                   generic.UpdateView):
+    model=Proveedor
+    template_name="cmp/proveedor_form.html"
+    context_object_name = 'obj'
+    form_class=ProveedorForm
+    success_url= reverse_lazy("cmp:proveedor_list")
+    success_message="Proveedor Editado"
+    permission_required="cmp.change_proveedor"
+
+    def form_invalid(self, form):
+        print(form.errors)  # Imprimir errores en la consola
+        return super().form_invalid(form)
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
+        print(self.request.user.id)
         return super().form_valid(form)
 
+
+@login_required(login_url="/login/")
+@permission_required("cmp.change_proveedor",login_url="/login/")
 def ProveedorInactivar(request,id):
-    template_name = 'cmp/inactivar_prv.html'
+    template_name='cmp/inactivar_prv.html'
     contexto={}
     prv = Proveedor.objects.filter(pk=id).first()
 
     if not prv:
-        return HttpResponse('Proveedor no existe' + str(id))
-    
+        return HttpResponse('Proveedor no existe ' + str(id))
+
     if request.method=='GET':
         contexto={'obj':prv}
 
     if request.method=='POST':
         prv.estado=False
         prv.save()
-        contexto={'obj': 'OK'}
+        contexto={'obj':'OK'}
         return HttpResponse('Proveedor Inactivado')
-        
 
-
-    return render(request, template_name, contexto)
+    return render(request,template_name,contexto)
+ 
 
 class ComprasView(SinPrivilegios, generic.ListView):
     model = ComprasEnc
