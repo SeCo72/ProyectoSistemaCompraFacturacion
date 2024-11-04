@@ -1,6 +1,15 @@
 # 🏪 Sistema de Compra y Facturación
 
 Sistema integral para la gestión de inventario, compras y facturación desarrollado con Python/Django.
+// USUARIOS
+  //admin    
+  //david1234
+
+  //usuario  
+  //selvin123
+
+  //debs
+  //selvin123
 
 ## 📋 Contenido
 - [Características](#-características)
