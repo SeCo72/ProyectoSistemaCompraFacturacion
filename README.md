@@ -130,6 +130,7 @@ python manage.py createsuperuser
 
 6. **Iniciar el servidor**
 ```bash
+Descomentar el SECRET_KEY en settings.py para que funcione en local correctamente
 python manage.py runserver
 ```
 
