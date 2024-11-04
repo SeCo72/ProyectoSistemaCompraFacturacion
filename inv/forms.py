@@ -98,5 +98,5 @@ class ProductoForm(forms.ModelForm):
             })
         # Cambia widget_attrs a widget.attrs
         self.fields['ultima_compra'].widget.attrs['readonly'] = True
-        self.fields['existencia'].widget.attrs['readonly'] = True
+        #self.fields['existencia'].widget.attrs['readonly'] = True
         
