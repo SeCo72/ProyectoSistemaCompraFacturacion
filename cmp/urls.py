@@ -17,8 +17,8 @@ urlpatterns = [
     path('compras/edit/<int:compra_id>',compras, name="compras_edit"),
     path('compras/<int:compra_id>/delete/<int:pk>',CompraDetDelete.as_view(), name="compras_del"),
 
-     path('compras/listado', reporte_compras, name='compras_print_all'),
-     path('compras/<int:compra_id>/imprimir', imprimir_compra,name="compras_print_one"),
+        path('compras/listado', reporte_compras, name='compras_print_all'),
+        path('compras/<int:compra_id>/imprimir', imprimir_compra,name="compras_print_one"),
 ]
 
 
