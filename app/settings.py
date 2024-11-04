@@ -139,9 +139,11 @@ STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-LOGIN_URL = '/login/'  # Asegúrate de que esto coincida con la ruta de tu vista de inicio de sesión
 LOGIN_REDIRECT_URL ='/'
 LOGOUT_REDIRECT_URL='/login/'
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
